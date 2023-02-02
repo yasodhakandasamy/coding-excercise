@@ -1,0 +1,9 @@
+Install the requrements:
+pip install -r requrements.txt
+
+Dump the data to sql db:
+python datadump.py
+	
+Run the application:
+python manage.py runserver
+	
