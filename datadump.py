@@ -4,7 +4,9 @@ from datetime import datetime
 
 from sqlalchemy import create_engine
 
-#create database weatherdb and table weather_data
+"""
+create database 'weatherdb' and table 'weather_data'
+"""
 def create_weatherdb():
     engine = create_engine('mysql+pymysql://root:Admin21$@127.0.0.1')
     conn = engine.connect()
@@ -16,11 +18,13 @@ def create_weatherdb():
     conn.execute(sql)
     conn.close()
 
-# insert records from text files into weather_data table
+"""
+Insert Records from text files into weather_data table
+station_id (filename), date, max_temp (maximum temperature), min_temp (minimum temperature), rain (amount of precipitation)
+"""
 def insert_weather_data(path, fileName):
 
     path = (path + '\\' + fileName)
-    #print(path)
     df = pd.read_csv(path, sep="\t", header=None, names=['date', 'max_temp', 'min_temp', 'rain'])
     df = df.set_index('date')
     df['station_id'] = fileName[:-4]
@@ -33,13 +37,20 @@ def insert_weather_data(path, fileName):
     except Exception as ee:
         print("skipping duplicate entries")
         return 0
-    #replace -9999 with nulls values
+
+    """
+    replace -9999 with nulls values
+    """
+
     conn.execute("update weather_data set min_temp = NULL where min_temp = -9999")
     conn.execute("update weather_data set max_temp = NULL where max_temp = -9999")
     conn.execute("update weather_data set rain = NULL where rain = -9999")
     conn.close()
     return rows
 
+"""
+creating a table for 'weather_stats' in database 'weatherdb'
+"""
 def create_weather_stats():
     engine = create_engine('mysql+pymysql://root:Admin21$@127.0.0.1/weatherdb')
     conn = engine.connect()
@@ -48,7 +59,12 @@ def create_weather_stats():
     conn.close()
     print("Table weather_stats created successfully!")
 
-# calculation of weather stats
+"""
+calculating the weather stats for avg_max_temp (Average maximum temperature),
+avg_min_temp(Average minimum temperature),
+tot_rain(Total accumulated precipitation) based on weather data
+and insert those records into weather_stats table
+"""
 def insert_weather_stats(fileName):
     engine = create_engine('mysql+pymysql://root:Admin21$@localhost/weatherdb')
     conn = engine.connect()
@@ -75,6 +91,9 @@ def insert_weather_stats(fileName):
 
     conn.close()
 
+"""
+checking the count no of records in each file
+"""
 def count_total_records(tableName):
     engine = create_engine('mysql+pymysql://root:Admin21$@127.0.0.1/weatherdb')
     conn = engine.connect()
@@ -96,7 +115,9 @@ if __name__  == "__main__" :
 
         start_time = datetime.now()
         print("starting data injection of file {} at ".format(textfile), start_time,"seconds")
-
+        
+        """Weather data method calling"""
+        
         count=insert_weather_data(path, textfile)
 
         end_time = datetime.now()
@@ -106,6 +127,9 @@ if __name__  == "__main__" :
         tot_records=count_total_records("weather_data")
         print(tot_records," total number of records in database")
         print()
+        
+        """Weather stats method calling"""
+        
         insert_weather_stats(textfile)
 
 

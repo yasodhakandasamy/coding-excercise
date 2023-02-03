@@ -3,8 +3,12 @@ from django_filters.rest_framework import DjangoFilterBackend
 from .serializers import WeatherSerializer, WeatherStatsSerializer
 from .paginations import CustomPagination
 from .models import Weather, WeatherStats
-# Create your views here.
 
+"""
+Create a weather list view allow you to filter the response by fields 
+like 'station id' and 'date'. Added custom pagination with page size 10.
+
+"""
 class WeatherList(generics.ListAPIView):
 
     serializer_class = WeatherSerializer
@@ -14,18 +18,17 @@ class WeatherList(generics.ListAPIView):
     search_fields = ['station_id', 'date']
     queryset = Weather.objects.all()
 
-    def get_queryset(self):
+"""
+Create a weatherstats list view allow you to filter the response by fields 
+like 'station id' and 'year'. Added custom pagination with page size 10.
 
-        queryset = Weather.objects.all()
-        station_id = self.request.query_params.get('station_id')
-        if station_id is not None:
-            queryset = queryset.filter(station_id=station_id)
-        return queryset
-
+"""
 class WeatherStatsList(generics.ListAPIView):
 
     serializer_class = WeatherStatsSerializer
     pagination_class = CustomPagination
-    filter_backends = [filters.SearchFilter]
+    filter_backends = [DjangoFilterBackend]
+    #filter_backends = [filters.SearchFilter]
+    filterset_fields = ['station_id', 'year']
     search_fields = ['station_id', 'year']
     queryset = WeatherStats.objects.all()
