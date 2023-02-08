@@ -1,33 +1,33 @@
-Weather API
+**# Weather API**
 
 This API allows you to access weather data for various stations and date. The data can be filtered by station name and Date. The API also provides statistical information on the weather data.
 
-Installation
+**# Installation**
 
 Install the required packages
 
 pip install -R requirements.txt
 
 
-Data Ingestion:
+**# Data Ingestion:**
 
 Run the below script for ingesting all the weather data and weathre statistics data to sql database
 
 python datadump.py
 
-Execution:
+**# Execution:**
 
 Run the following command to access the weather api's through swagger 
 
 python .\manage.py runserver
 
-EndPoints:
+**# EndPoints:**
 
-Swagger :
+**Swagger :**
 
 http://localhost:8000/swagger/
 
-Weather Data Api :
+**Weather Data Api :**
 
 GET /api/weather/
 
@@ -35,7 +35,7 @@ This endpoint returns a paginated list of weather records. You can filter the re
 
 GET /api/weather/?station_id=USC00110072&date=1987-01-01
 
-Weather Statistics Api :
+**Weather Statistics Api :**
 
 GET /api/weather/stats/
 
@@ -44,14 +44,14 @@ This endpoint returns statistical information about the weather data. You can fi
 GET /api/weather/stats/?station_id=USC00110072&year=1987
 
 
-Testing :
+**# Testing :**
 
 Run the tests
 
 python test_data.py
 
 
-Deployment:
+**# Deployment:**
 
 These are steps followed to deploy the service in aws 
 1. Create the Docker file 
