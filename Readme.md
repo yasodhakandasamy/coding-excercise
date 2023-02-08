@@ -1,57 +1,81 @@
-** Weather API**
+# Weather API
 
 This API allows you to access weather data for various stations and date. The data can be filtered by station name and Date. The API also provides statistical information on the weather data.
 
-** Installation**
+## Installation
 
 Install the required packages
 
-pip install -R requirements.txt
+```bash
+    pip install -R requirements.txt
+```
 
 
-** Data Ingestion:**
+## Data Ingestion:
 
 Run the below script for ingesting all the weather data and weathre statistics data to sql database
 
-python datadump.py
+```bash
+  python datadump.py
+```
 
-** Execution:**
+## Execution:
 
 Run the following command to access the weather api's through swagger 
 
-python .\manage.py runserver
+```bash
+  python .\manage.py runserver
+```
 
-** EndPoints:**
+## API Reference
 
-**Swagger :**
+#### Swagger :
 
-http://localhost:8000/swagger/
+    http://localhost:8000/swagger/
 
-**Weather Data Api :**
+#### Weather Data Api :
 
-GET /api/weather/
+```http
+  GET /api/weather/
+```
+
+| Parameter    | Type     |     Description               |
+| :--------    | :------- | :---------------------------- |
+| `station_id` | `string` | **Optional**. Your Station id |
+| ` date`      | `string` | **Optional**. Your Date       |
 
 This endpoint returns a paginated list of weather records. You can filter the results by date and station id using query parameters:
 
-GET /api/weather/?station_id=USC00110072&date=1987-01-01
+```http
+  GET /api/weather/?station_id=USC00110072&date=1987-01-01
+```
 
-**Weather Statistics Api :**
+#### Weather Statistics Api :
 
-GET /api/weather/stats/
+```http
+  GET /api/weather/stats/
+```
+| Parameter    | Type     |     Description               |
+| :--------    | :------- | :---------------------------- |
+| `station_id` | `string` | **Optional**. Your Station id |
+| ` year`      | `string` | **Optional**. Your Year       |
+
 
 This endpoint returns statistical information about the weather data. You can filter the results by year and station id using query parameters.
 
-GET /api/weather/stats/?station_id=USC00110072&year=1987
+```http
+  GET /api/weather/stats/?station_id=USC00110072&year=1987
+```
 
 
-** Testing :**
+## Testing :
 
 Run the tests
 
 python test_data.py
 
 
-** Deployment:**
+## Deployment:
 
 These are steps followed to deploy the service in aws 
 1. Create the Docker file 
