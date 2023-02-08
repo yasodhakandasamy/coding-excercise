@@ -72,7 +72,9 @@ This endpoint returns statistical information about the weather data. You can fi
 
 Run the tests
 
-python test_data.py
+```bash
+  python test_data.py
+```
 
 
 ## Deployment:
@@ -83,7 +85,8 @@ These are steps followed to deploy the service in aws
 3. Store the image into AWS ECR Repository
 4. Run the container in AWS ECS Service based on image
 5. Monitor the logs using AWS Cloud Watch
-These are the aws services pointing to my container 
+
+#### These are the aws services pointing to my container 
 - aws s3 for storing/fetching the files
 - aws RDS for ingest/retrieve the data from the database
-Using AWS cloud front and Application Load balancer for routing the traffic to api running in different containers for scalable and durabiliity
+- aws cloud front and Application Load balancer for routing the traffic to api running in different containers for scalable and durabiliity
